@@ -65,8 +65,8 @@
 
           Angle: <p id="result">0</p>
 
-          <input type="button" value="Start Simulation" style="margin-top:10px; font-size:120%;" onclick="startSim();"><br>
-          <input type="button" value="Reset Simulation" style="margin-top:10px; font-size:120%;" onclick="reset();">
+          <input type="button" value="Start Simulation" id="start_butt" style="margin-top:10px; font-size:120%;" onclick="startSim();"><br>
+          <input type="button" value="Reset Simulation" id="reset_butt" style="margin-top:10px; font-size:120%;" onclick="reset();">
       </div>
     </div>
 
@@ -168,6 +168,11 @@
         shadow = new Image();
         shadow.src = "shadow.png";
 
+        var reset_butt = document.getElementById("reset_butt");
+        var start_butt = document.getElementById("start_butt");
+
+        reset_butt.disabled = true;
+
         background.onload = function() {
           context.drawImage(background, 0, 0, canvas.width, canvas.height);
           context.drawImage(cannon, 25, 205, 40, 30);
@@ -177,6 +182,8 @@
 
 
         function reset() {
+          reset_butt.disabled = true;
+          start_butt.disabled = false;
           context.clearRect(0, 0, canvas.width, canvas.height);
           context.drawImage(background, 0, 0, canvas.width, canvas.height);
           context.drawImage(cannon, 25, 205, 40, 30);
@@ -200,8 +207,11 @@
 
         function startSim() {
           stop = false;
+
           var timer = setInterval(() => {
             widthSlider.disabled = true;
+            reset_butt.disabled = false;
+            start_butt.disabled = true;
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.beginPath();
             time += 1;
@@ -222,8 +232,13 @@
             context.stroke();
 
 
-            if (y > 201 || stop == true) {
+            if (y > 201) {
               clearInterval(timer);
+            };
+
+            if (stop == true) {
+              clearInterval(timer);
+              reset();
             }
           }, 100)
         };

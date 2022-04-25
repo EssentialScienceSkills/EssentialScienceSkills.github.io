@@ -71,8 +71,8 @@
           Fire Temperature <input type="range" id="widthSlider" min="1000" max="1990" step="10" value="100"
               onchange="adjustWidth();" oninput="adjustWidth();"><br>
 
-          <input type="button" value="Start Simulation" style="margin-top:10px; font-size:120%;" onclick="startSim();"><br>
-          <input type="button" value="Reset Simulation" style="margin-top:10px; font-size:120%;" onclick="reset();">
+          <input type="button" value="Start Simulation" id="start_butt" style="margin-top:10px; font-size:120%;" onclick="startSim();"><br>
+          <input type="button" value="Reset Simulation" id="reset_butt" style="margin-top:10px; font-size:120%;" onclick="reset();">
       </div>
     </div>
 
@@ -154,6 +154,16 @@
         var context = canvas.getContext("2d");
         var widthSlider = document.getElementById("widthSlider");
 
+        var ice_butt = document.getElementById("ice");
+        var salt_butt = document.getElementById("salt");
+        var sand_butt = document.getElementById("sand");
+        var orange_butt = document.getElementById("orange");
+        var strawberry_butt = document.getElementById("strawberry");
+        var chocolate_butt = document.getElementById("chocolate");
+
+        var reset_butt = document.getElementById("reset_butt");
+        var start_butt = document.getElementById("start_butt");
+
         substance = new Image();
         substance.src = 'assets/ice1.png';
         base_image = new Image();
@@ -194,9 +204,20 @@
             context.drawImage(test_tube, 235, 28, 175/3.2, 453/3.2);
             context.fillText(temperature, 335, 146);
           };
+          widthSlider.disabled = true;
+          reset_butt.disabled = true;
         };
 
         function reset() {
+          widthSlider.disabled = true;
+          start_butt.disabled = false;
+          reset_butt.disabled = true;
+          ice_butt.disabled = false;
+          salt_butt.disabled = false;
+          sand_butt.disabled = false;
+          orange_butt.disabled = false;
+          strawberry_butt.disabled = false;
+          chocolate_butt.disabled = false;
           if (temperature != 0) {
             temperature = -2;
           };
@@ -207,6 +228,15 @@
         };
 
         function startSim () {
+          start_butt.disabled = true;
+          reset_butt.disabled = false;
+          ice_butt.disabled = true;
+          salt_butt.disabled = true;
+          sand_butt.disabled = true;
+          orange_butt.disabled = true;
+          strawberry_butt.disabled = true;
+          chocolate_butt.disabled = true;
+          widthSlider.disabled = false;
           var images;
           var temps;
           if (ice.checked) {
